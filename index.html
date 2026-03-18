@@ -1,129 +1,185 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Food Ordering Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Ordering Pro</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            background-color: #f5f5f5;
-            text-align: center;
-        }
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5;
+}
 
-        h1 {
-            color: #ff5722;
-        }
+header {
+    background: #ff5722;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
 
-        .menu {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
+.container {
+    padding: 20px;
+}
 
-        .item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 150px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
 
-        button {
-            background: #ff5722;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+.item {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
 
-        button:hover {
-            background: #e64a19;
-        }
+.item:hover {
+    transform: scale(1.05);
+}
 
-        #cart {
-            margin-top: 30px;
-            background: white;
-            padding: 20px;
-            width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 10px;
-        }
-    </style>
+.item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+#cart {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 300px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+#cart ul {
+    list-style: none;
+    padding: 0;
+}
+
+#cart li {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.total {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.badge {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+</style>
 </head>
 
 <body>
 
-    <h1>🍔 Website Đặt Món Ăn</h1>
+<header>
+    <h1>🍔 Food Ordering Pro <span id="count" class="badge">0</span></h1>
+</header>
 
-    <div class="menu">
-        <div class="item">
-            <h3>Pizza</h3>
-            <p>100k</p>
-            <button onclick="addToCart('Pizza')">Thêm</button>
-        </div>
+<div class="container">
 
-        <div class="item">
-            <h3>Hamburger</h3>
-            <p>50k</p>
-            <button onclick="addToCart('Hamburger')">Thêm</button>
-        </div>
+<div class="menu">
 
-        <div class="item">
-            <h3>Trà sữa</h3>
-            <p>30k</p>
-            <button onclick="addToCart('Trà sữa')">Thêm</button>
-        </div>
-    </div>
+<div class="item">
+<img src="https://via.placeholder.com/200">
+<h3>Pizza</h3>
+<p>100k</p>
+<button onclick="addToCart('Pizza')">Thêm</button>
+</div>
 
-    <div id="cart">
-        <h2>🛒 Giỏ hàng</h2>
-        <ul id="cart-list"></ul>
-    </div>
+<div class="item">
+<img src="https://via.placeholder.com/200">
+<h3>Hamburger</h3>
+<p>50k</p>
+<button onclick="addToCart('Hamburger')">Thêm</button>
+</div>
 
-    <script>
-        let cart = [];
+<div class="item">
+<img src="https://via.placeholder.com/200">
+<h3>Trà sữa</h3>
+<p>30k</p>
+<button onclick="addToCart('Trà sữa')">Thêm</button>
+</div>
 
-        function addToCart(item) {
-            cart.push(item);
-            renderCart();
-        }
+</div>
 
-        function renderCart() {
-            let list = document.getElementById("cart-list");
-            list.innerHTML = "";
+</div>
 
-            cart.forEach(function(item) {
-                let li = document.createElement("li");
-                li.textContent = item;
-                list.appendChild(li);
-            });
-        }
-    <script>
-    let cart = [];
+<div id="cart">
+<h2>🛒 Giỏ hàng</h2>
+<ul id="cart-list"></ul>
+<p class="total" id="total">Tổng: 0k</p>
+<button onclick="clearCart()">Xóa hết</button>
+</div>
 
-    function addToCart(item) {
-        cart.push(item);
-        renderCart();
-    }
+<script>
+let cart = [];
 
-    function removeItem(index) {
-        cart.splice(index, 1);
-        renderCart();
-    }
+let prices = {
+    "Pizza": 100,
+    "Hamburger": 50,
+    "Trà sữa": 30
+};
 
-    function renderCart() {
-        let list = document.getElementById("cart-list");
-        list.innerHTML = "";
+function addToCart(item) {
+    cart.push(item);
+    renderCart();
+}
 
-        cart.forEach(function(item, index) {
-            let li = document.createElement("li");
-            li.innerHTML = item + " <button onclick='removeItem(" + index + ")'>❌</button>";
-            list.appendChild(li);
-        });
-    }
+function removeItem(index) {
+    cart.splice(index, 1);
+    renderCart();
+}
+
+function clearCart() {
+    cart = [];
+    renderCart();
+}
+
+function renderCart() {
+    let list = document.getElementById("cart-list");
+    let total = 0;
+
+    list.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        total += prices[item];
+
+        let li = document.createElement("li");
+        li.innerHTML = `
+            ${item} (${prices[item]}k)
+            <button onclick="removeItem(${index})">❌</button>
+        `;
+        list.appendChild(li);
+    });
+
+    document.getElementById("total").innerText = "Tổng: " + total + "k";
+    document.getElementById("count").innerText = cart.length;
+}
 </script>
 
 </body>
