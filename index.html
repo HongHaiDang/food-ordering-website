@@ -101,7 +101,30 @@
                 list.appendChild(li);
             });
         }
-    </script>
+    <script>
+    let cart = [];
+
+    function addToCart(item) {
+        cart.push(item);
+        renderCart();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function renderCart() {
+        let list = document.getElementById("cart-list");
+        list.innerHTML = "";
+
+        cart.forEach(function(item, index) {
+            let li = document.createElement("li");
+            li.innerHTML = item + " <button onclick='removeItem(" + index + ")'>❌</button>";
+            list.appendChild(li);
+        });
+    }
+</script>
 
 </body>
 </html>
